@@ -36,6 +36,12 @@
 
 <script>
 //Your code goes here 
+	const items =  document.getElementsByClassName("item");
+
+
+Array.from(items).forEach((val)=>{
+	val.draggable = true;
+});
 </script>
 
   </body>
