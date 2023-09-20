@@ -41,6 +41,9 @@
 
 Array.from(items).forEach((val)=>{
 	val.draggable = true;
+	val.addEventListener("dragstart",()=>{
+		console.log("Drag started");
+	})
 });
 </script>
 
