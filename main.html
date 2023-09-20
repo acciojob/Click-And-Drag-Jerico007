@@ -36,34 +36,67 @@
 
 <script>
 //Your code goes here 
-	const items = document.getElementsByClassName("item");
-const parentDiv = document.getElementsByClassName("items")[0];
-Array.from(items).forEach((val) => {
-  //Making boxex draggable
-  val.setAttribute("draggable", "true");
-  //Adding eventListener for dragstart
-  val.addEventListener("dragstart", dragValue);
-  //Adding eventListener for dragover
-  val.addEventListener("dragover", allowDrop);
-  //Adding eventListener for dragdrop
-  val.addEventListener("drop", dropValue);
-});
+	 const slider = document.querySelector('.items');
+  let isDown = false;
+  let startX;
+  let scrollLeft;
 
-function dragValue(event) {
-  event.dataTransfer.setData("div", event.target.id);
-}
+  slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    slider.classList.add('active');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+    console.log("erreerre", scrollLeft)
+  });
 
-function allowDrop(event) {
-  event.preventDefault();
-}
+  slider.addEventListener('mouseleave', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
 
-function dropValue(event) {
-    let data = event.dataTransfer.getData("div");
-    let newDiv = document.getElementById(data);
-    let temp = event.target.innerText;
-    event.target.innerText = newDiv.innerText;
-    newDiv.innerText = temp;
-}
+  slider.addEventListener('mouseup', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+
+  slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;  // stop the fn from running
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2;
+    slider.scrollLeft = scrollLeft - walk;
+    
+    console.log('sdsd', scrollLeft)
+    console.log(slider.scrollLeft)
+  });
+
+
+//   touchEvents
+
+  slider.addEventListener('touchstart', (e) => {
+    isDown = true;
+    slider.classList.add('active');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  slider.addEventListener('touchend', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+
+  slider.addEventListener('touchcancel', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+
+  slider.addEventListener('touchmove', (e) => {
+    if (!isDown) return;  // stop the fn from running
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2;
+    slider.scrollLeft = scrollLeft - walk;
+  });
 </script>
 
   </body>
